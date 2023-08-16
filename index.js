@@ -50,6 +50,36 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+const generateId = () => {
+  const newId = Math.floor(Math.random() * 1000000);
+  if (persons.some(p => p.id === newId)) {
+    return generateId();
+  }
+  return newId;
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name || !body.number) {
+    return response.status(400).json({error: 'content missing'})
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId()
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+// checking if persons length is greater than 0
+// if it is, we use math.max to find the highest id
+//  we make a shallow copy of persons array and map through persons array to transform it into array of ids
+// return the maxId +1
+
 app.delete('/api/persons/:id', (request, response) => {
 const id = Number(request.params.id)
 persons = persons.filter(person => person.id !== id)
