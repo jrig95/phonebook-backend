@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1","build:ui": "rm -rf build && cd ../../../fullStackOpen/part2/the-phonebook/ && npm run build && cp -r build ../../../../fullStackOpen-Part3/server/phonebook/",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
   },
   "author": "James Riggleman",
   "license": "ISC",
